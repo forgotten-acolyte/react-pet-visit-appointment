@@ -1,14 +1,28 @@
-import logo192 from './images/logo192.png'
 import './App.css';
-import React, {Component, useState, useEffect, useReducer} from "react";
+import React, {Component, useState, useEffect, useReducer, useCallback} from "react";
 import {Routes, Route} from "react-router-dom";
-import { BiCalendar, BiArchive, BiTrash } from "react-icons/bi";
+import { BiArchive } from "react-icons/bi";
 import Search   from "./components/Search"
 import AddAppointment from "./components/AddAppointment";
 import AppointmentInfo from "./components/AppointmentInfo";
-import appointmentList from "./data.json"
 
 function App(){
+
+  let [appointmentList, setAppointmentList] = useState([]);
+
+  const fetchData = useCallback(() => {
+    fetch('./data.json') 
+      .then(response => response.json())
+      .then(data => {
+        setAppointmentList(data)
+      });
+  }, [])
+
+  //monitors data change, will invoke the function whenever fetchData's value changes
+  useEffect( () => {
+    fetchData()
+  }, [fetchData]);
+
   return(
     <div className="App container mx-auto mt-3 font-thin">
       <h1 className="text-5xl mb-3" > 
