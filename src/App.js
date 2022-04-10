@@ -6,6 +6,7 @@ import { BiCalendar, BiArchive, BiTrash } from "react-icons/bi";
 import Search   from "./components/Search"
 import AddAppointment from "./components/AddAppointment";
 import AppointmentInfo from "./components/AppointmentInfo";
+import appointmentList from "./data.json"
 
 function App(){
   return(
@@ -17,7 +18,10 @@ function App(){
       <Search />
 
       <ul className="divide-y divide-gray-200">
-        <AppointmentInfo />
+        {appointmentList 
+          .map(appointment => (
+            <AppointmentInfo key={appointment.id} appointment= {appointment} />
+          ))}
       </ul>
 
     </div>   

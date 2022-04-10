@@ -1,12 +1,10 @@
-import appointmentList from "../data.json"
 import { BiTrash } from "react-icons/bi";
 
-const AppointmentInfo = () => {
+const AppointmentInfo = ({appointment}) => {
+
+
     return(
-        <ul>
-             {appointmentList
-          .map(appointment => (
-            <li className="px-3 py-3 flex items-start">
+         <li className="px-3 py-3 flex items-start">
             <button type="button"
               className="p-1.5 mr-1.5 mt-1 rounded text-white bg-red-500 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
               <BiTrash /></button>
@@ -15,12 +13,10 @@ const AppointmentInfo = () => {
                 <span className="flex-none font-medium text-2xl text-blue-500">{appointment.petName}</span>
                 <span className="flex-grow text-right">{appointment.aptDate}</span> 
               </div>
-              <div><b className="font-bold text-blue-500">Owner:</b> {appointment.ownerName}</div>
+              <div> <b className="font-bold text-blue-500">Owner:</b> {appointment.ownerName}</div>
               <div className="leading-tight">{appointment.aptNotes}</div>
             </div>
-          </li>
-          ))}
-        </ul>
+        </li>
     )
 }
 
