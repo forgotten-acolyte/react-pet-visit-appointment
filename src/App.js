@@ -2,21 +2,10 @@ import logo192 from './images/logo192.png'
 import './App.css';
 import React, {Component, useState, useEffect, useReducer} from "react";
 import {Routes, Route} from "react-router-dom";
-import { BiCalendar, BiArchive } from "react-icons/bi";
+import { BiCalendar, BiArchive, BiTrash } from "react-icons/bi";
 import Search   from "./components/Search"
 import AddAppointment from "./components/AddAppointment";
-
-// import {
-//   Home,
-//   About,
-//   Events,
-//   Contacts,
-//   Oops404,
-//   Services,
-//   CompanyHistory,
-//   Location
-// } from "./pages"
-
+import AppointmentInfo from "./components/AppointmentInfo";
 
 function App(){
   return(
@@ -26,6 +15,11 @@ function App(){
       </h1>
       <AddAppointment />
       <Search />
+
+      <ul className="divide-y divide-gray-200">
+        <AppointmentInfo />
+      </ul>
+
     </div>   
   )
 }
