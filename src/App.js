@@ -1,7 +1,8 @@
 import logo192 from './images/logo192.png'
 import './App.css';
-import React, {useState, useEffect, useReducer} from "react";
+import React, {Component, useState, useEffect, useReducer} from "react";
 import {Routes, Route} from "react-router-dom";
+import { IconName,BsFillAlarmFill } from "react-icons/bs";
 
 import {
   Home,
@@ -14,7 +15,16 @@ import {
   Location
 } from "./pages"
 
+
 function App(){
+  return(
+    <div>
+      <h1 > <BsFillAlarmFill /> My Appoinments </h1>
+    </div>   
+  )
+}
+
+function App_2(){
   return(
     <div>
       <Routes>
