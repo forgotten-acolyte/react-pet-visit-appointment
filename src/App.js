@@ -1,6 +1,5 @@
 import './App.css';
-import React, {Component, useState, useEffect, useReducer, useCallback} from "react";
-import {Routes, Route} from "react-router-dom";
+import React, { useState, useEffect, useReducer, useCallback} from "react";
 import { BiArchive } from "react-icons/bi";
 import Search   from "./components/Search"
 import AddAppointment from "./components/AddAppointment";
@@ -9,6 +8,25 @@ import AppointmentInfo from "./components/AppointmentInfo";
 function App(){
 
   let [appointmentList, setAppointmentList] = useState([]);
+
+  let[query, setQuery] = useState("");
+  let[sortBy, setSortBy] = useState("petName");
+  let[orderBy, setOrderBy] = useState("Asc");
+
+  const filteredAppointments = appointmentList.filter(
+    item => {
+      return (
+        item.petName.toLowerCase().includes(query.toLowerCase()) ||
+        item.ownerName.toLowerCase().includes(query.toLowerCase()) ||
+        item.aptNotes.toLowerCase().includes(query.toLowerCase())
+      )
+    }
+  ).sort((a, b) => {
+      let order = (orderBy  === 'Asc' ) ? 1 : -1;
+      return (
+          a[sortBy].toLowerCase() < b[sortBy].toLowerCase() ? -1 *order : 1 * order
+      )
+  })
 
   const fetchData = useCallback(() => {
     fetch('./data.json') 
@@ -29,10 +47,19 @@ function App(){
          <BiArchive className="inline-block text-red-400"/> My Appoinments 
       </h1>
       <AddAppointment />
-      <Search />
+
+        {/* init the value of queryString var and onQueryInput event    */}
+      <Search
+          queryString={query}
+          onQueryInput={myQuery => setQuery(myQuery)}
+          orderBy = {orderBy}
+          onOrderByChange = {orderDirection => setOrderBy(orderDirection)}
+          sortBy = {sortBy}
+          onSortByChange = {mySort => setSortBy(mySort) }
+      />
 
       <ul className="divide-y divide-gray-200">
-        {appointmentList 
+        {filteredAppointments
           .map(appointment => (
             <AppointmentInfo key = {appointment.id} appointment = {appointment} 
               onDeleteAppointment = {
@@ -47,26 +74,5 @@ function App(){
     </div>   
   )
 }
-
-// function App_2(){
-//   return(
-//     <div>
-//       <Routes>
-//         <Route path="/" element={<Home />} />
-
-//         <Route path="/about" element={<About/>}>
-//           <Route path="/services" element={<Services/>}/>
-//           <Route path="/history" element={<CompanyHistory/>}/>
-//           <Route path="/location" element={<Location/>} />
-//         </Route>
-
-//         <Route path="/event" element={<Events/>} />
-//         <Route path="/contact" element={<Contacts/>} />
-//         <Route path="*" element= {<Oops404/>} />
-
-//       </Routes> 
-//     </div>
-//   )
-// }
 
 export default App;
