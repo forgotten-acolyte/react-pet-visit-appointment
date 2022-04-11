@@ -8,7 +8,6 @@ import AppointmentInfo from "./components/AppointmentInfo";
 function App(){
 
   let [appointmentList, setAppointmentList] = useState([]);
-
   let[query, setQuery] = useState("");
   let[sortBy, setSortBy] = useState("petName");
   let[orderBy, setOrderBy] = useState("Asc");
@@ -46,7 +45,12 @@ function App(){
       <h1 className="text-5xl mb-3" > 
          <BiArchive className="inline-block text-red-400"/> My Appoinments 
       </h1>
-      <AddAppointment />
+      <AddAppointment
+        onSendAppointment={myAppointment => setAppointmentList([...appointmentList, myAppointment])}
+        lastId = {appointmentList.reduce((max, item) =>
+            Number(item.id) > max ? Number(item.id) : max, 0
+        )}
+      />
 
         {/* init the value of queryString var and onQueryInput event    */}
       <Search
